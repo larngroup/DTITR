@@ -3,7 +3,7 @@
 
 
 ## DTITR Architecture
-<p align="center"><img src="/figures/dtitr_arch.png" width="70%" height="70%"/></p>
+<p align="center"><img src="/figures/dtitr_arch.png" width="80%" height="80%"/></p>
 
 ## Davis Kinase Binding Affinity
 ### Dataset
