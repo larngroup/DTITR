@@ -3,5 +3,5 @@
 
 
 ## DTITR Architecture
-<p align="center"><img src="/figure/pred_model.png" width="70%" height="70%"/></p>
+<p align="center"><img src="/figures/dtitr_arch.png" width="70%" height="70%"/></p>
 
