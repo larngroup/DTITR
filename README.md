@@ -5,3 +5,22 @@
 ## DTITR Architecture
 <p align="center"><img src="/figures/dtitr_arch.png" width="70%" height="70%"/></p>
 
+## Davis Kinase Binding Affinity
+### Dataset
+- **davis_original_dataset:** original dataset
+- **davis_dataset_processed:** dataset processed : prot sequences + rdkit SMILES strings + pkd values
+- **deep_features_dataset:** CNN deep representations: protein + SMILES deep representations
+### Clusters
+- **test_cluster:** independent test set indices
+- **train_cluster_X:** train indices 
+### Similarity
+- **protein_sw_score:** protein Smith-Waterman similarity scores
+- **protein_sw_score_norm:** protein Smith-Waterman similarity normalized scores
+- **smiles_ecfp6_tanimoto_sim:** SMILES Morgan radius 3 similarity scores
+
+## Dictionaries
+- **davis_prot_dictionary**: AA char-integer dictionary
+- **davis_smiles_dictionary**: SMILES char-integer dictionary
+- **protein_codes_uniprot/subword_units_map_uniprot**: Protein Subwords Dictionary
+- **drug_codes_chembl/subword_units_map_chembl**: SMILES Subwords Dictionary
+
