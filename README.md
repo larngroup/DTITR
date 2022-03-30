@@ -9,7 +9,6 @@
 ### Dataset
 - **davis_original_dataset:** original dataset
 - **davis_dataset_processed:** dataset processed : prot sequences + rdkit SMILES strings + pkd values
-- **deep_features_dataset:** CNN deep representations: protein + SMILES deep representations
 ### Clusters
 - **test_cluster:** independent test set indices
 - **train_cluster_X:** train indices 
