@@ -336,17 +336,17 @@ def run_train_model(FLAGS):
 
     mse, rmse, ci = dtitr_model.evaluate([prot_test, smiles_test], kd_test)
 
-    dtitr_model.save('dtitr_model.h5')
-    api = HfApi()
-    api.upload_file(
-        path_or_fileobj= os.path.join(os.getcwd(), 'dtitr_model.h5'),  
-        path_in_repo=f'DTITR-{datetime.now()}',
-        repo_id="DLSAutumn2023/DTITR_Recreation"
-    )
+    if FLAGS.huggingsave:
+        dtitr_model.save('dtitr_model.h5')
+        api = HfApi()
+        api.upload_file(
+            path_or_fileobj= os.path.join(os.getcwd(), 'dtitr_model.h5'),  
+            path_in_repo=f'DTITR-{datetime.now()}',
+            repo_id="DLSAutumn2023/DTITR_Recreation"
+        )
 
 
     logging("Test Fold - " + (" MSE = %0.3f, RMSE = %0.3f, CI = %0.3f" % (mse, rmse, ci)), FLAGS)
-
 
 def run_evaluation_model(FLAGS):
     """
@@ -396,7 +396,8 @@ def run_evaluation_model(FLAGS):
     dtitr_model = build_dtitr_model(FLAGS, 3, 3, 1, 4, 4, 4, '', '', 512, 512, 128, 0.1, 'gelu', 3, [512, 512, 512],
                                     optimizer_fun)
 
-    dtitr_model.load_weights('../model/dtitr_model/')
+    # small modification to load a specific model from a path
+    dtitr_model.load_weights('../model/dtitr_model/') if not FLAGS.mpath else dtitr_model.load_weights(os.path.join(os.getcwd(), FLAGS.mpath))
 
     metrics = inference_metrics(dtitr_model, [prot_test, smiles_test, kd_test])
 
@@ -429,6 +430,8 @@ if __name__ == "__main__":
         os.makedirs(FLAGS.checkpoint_path)
 
     logging(str(FLAGS), FLAGS)
+
+    print(FLAGS.option)
 
     if FLAGS.option == 'Train':
         run_train_model(FLAGS)

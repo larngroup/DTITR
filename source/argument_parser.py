@@ -16,6 +16,19 @@ def argparser():
     """
 
     parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        '--mpath',
+        type=str,
+        help='specifies the specific path of the model.pb'
+    )
+
+    parser.add_argument(
+        '--huggingSave',
+        type=str,
+        help='Saves model to hugging face repo'
+    )
+
     parser.add_argument(
         '--option',
         type=str,
