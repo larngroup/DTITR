@@ -15,6 +15,8 @@ from argument_parser import *
 import gc
 from plot_utils import *
 from utils import *
+from huggingface_hub import HfApi
+from datetime import datetime
 
 
 def build_dtitr_model(FLAGS, prot_trans_depth, smiles_trans_depth, cross_attn_depth,
@@ -334,7 +336,14 @@ def run_train_model(FLAGS):
 
     mse, rmse, ci = dtitr_model.evaluate([prot_test, smiles_test], kd_test)
 
-    # dtitr_model.save('dtitr_model.h5')
+    dtitr_model.save('dtitr_model.h5')
+    api = HfApi()
+    api.upload_file(
+        path_or_fileobj= os.path.join(os.getcwd(), 'dtitr_model.h5'),  
+        path_in_repo=f'DTITR-{datetime.now()}',
+        repo_id="DLSAutumn2023/DTITR_Recreation"
+    )
+
 
     logging("Test Fold - " + (" MSE = %0.3f, RMSE = %0.3f, CI = %0.3f" % (mse, rmse, ci)), FLAGS)
 
@@ -399,7 +408,8 @@ def run_evaluation_model(FLAGS):
 
 if __name__ == "__main__":
     physical_devices = tf.config.list_physical_devices('GPU')
-    tf.config.experimental.set_memory_growth(physical_devices[0], True)
+    if physical_devices:
+        tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
     FLAGS = argparser()
     FLAGS.log_dir = os.getcwd() + '/logs/' + time.strftime("%d_%m_%y_%H_%M", time.gmtime()) + "/"
